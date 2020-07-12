@@ -65,7 +65,9 @@ steps:
     publishLocation: 'pipeline'
 
 - powershell: |
-    $response = Invoke-RestMethod -Uri "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/build/builds/$($env:BUILD_BUILDID)/artifacts?artifactName=Release&api-version=4.1"
+    $uri = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/build/builds/$($env:BUILD_BUILDID)/artifacts?artifactName=Release&api-version=4.1"
+    Write-Output "$uri"
+    $response = Invoke-RestMethod -Uri "$uri"
     $Container = $response.resource.data.TrimStart("#/")
     $downloadUrl = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)_apis/resources/Containers/$($Container)?itemPath=$($Env:ARTIFACTNAME)%2Ftwilightforest-$($env:JAVAPROPS_MINECRAFT_VERSION)-$($env:JAVAPROPS_MOD_VERSION).$($env:REVISION)-universal.jar"
     $jobResult = (Get-Culture).TextInfo.ToTitleCase(${env:agent.jobstatus})
