@@ -61,7 +61,7 @@ steps:
   displayName: 'Publish Artifacts'
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)'
-    artifact: '$(artifactName)
+    artifact: '$(artifactName)'
     publishLocation: 'pipeline'
 
 - powershell: |
