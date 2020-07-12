@@ -57,18 +57,11 @@ steps:
     targetFolder: $(build.artifactStagingDirectory)
   condition: and(succeeded(), eq(variables['CreateArtifacts'], 'True'))
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Build Artifacts to Azure DevOps'
-  condition: and(succeeded(), eq(variables['CreateArtifacts'], 'True'))
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: '$(artifactName)'
-    publishLocation: 'Container'
-
 - task: PublishPipelineArtifact@1
+  displayName: 'Publish Artifacts'
   inputs:
     targetPath: '$(Build.ArtifactStagingDirectory)'
-    artifact: '$(artifactName)2'
+    artifact: '$(artifactName)
     publishLocation: 'pipeline'
 
 - powershell: |
@@ -115,6 +108,7 @@ steps:
     $headers = @{ Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN" }
     $response = Invoke-RestMethod -Uri $uri -Headers $headers
     $response | ConvertTo-Json -Compress
+    Write-Output "$response"
   displayName: Format discord message
   condition: always()
   env:
@@ -136,4 +130,4 @@ steps:
       Write-Output "$nameAsCapitalSnakeCase = $($_.Value)"
     }
   displayName: Dump Variables
-  #condition: eq(variables['system.debug'], 'true')
+  condition: always()
