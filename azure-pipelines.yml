@@ -55,7 +55,6 @@ steps:
     sourceFolder: './build/libs/'
     contents: 'twilightforest-*-universal.jar'
     targetFolder: $(build.artifactStagingDirectory)
-  condition: and(succeeded(), eq(variables['CreateArtifacts'], 'True'))
 
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Artifacts'
