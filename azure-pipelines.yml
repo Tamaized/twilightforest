@@ -31,7 +31,8 @@ steps:
   displayName: Create Azure DevOps variables from gradle properties file
 
 - powershell: |
-    New-Item ./build/libs/twilightforest-$(javaprops_mod_version).$(revision)-universal.jar
+    New-Item -Path './build/libs' -ItemType Directory
+    New-Item -Path './build/libs/twilightforest-$(javaprops_mod_version).$(revision)-universal.jar' -ItemType File
   displayName: E
 
 #- task: Gradle@2
