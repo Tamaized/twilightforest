@@ -69,7 +69,9 @@ steps:
     publishLocation: 'pipeline'
 
 - powershell: |
+    Write-Output "$(System.AccessToken)"
     $uri = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/build/builds/$($env:BUILD_BUILDID)/artifacts?artifactName=Release&api-version=4.1"
+    Write-Output "$uri"
     $response = Invoke-RestMethod -Uri "$uri"
     Write-Output "$response.resource.data"
     $Container = $response.resource.data.TrimStart("#/")
