@@ -68,6 +68,11 @@ steps:
     artifact: '$(artifactName)'
     publishLocation: 'pipeline'
 
+- task: UniversalPackages@0
+  inputs:
+    command: 'publish'
+    publishDirectory: '$(Build.ArtifactStagingDirectory)'
+
 - powershell: |
     Write-Output "$(System.AccessToken)"
     $uri = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/build/builds/$($env:BUILD_BUILDID)/artifacts?artifactName=Release&api-version=4.1"
