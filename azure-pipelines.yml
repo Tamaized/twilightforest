@@ -61,12 +61,12 @@ steps:
     contents: 'twilightforest-*-universal.jar'
     targetFolder: $(build.artifactStagingDirectory)
 
-- task: PublishPipelineArtifact@1
-  displayName: 'Publish Artifacts'
-  inputs:
-    targetPath: '$(Build.ArtifactStagingDirectory)'
-    artifact: '$(artifactName)'
-    publishLocation: 'pipeline'
+#- task: PublishPipelineArtifact@1
+#  displayName: 'Publish Artifacts'
+#  inputs:
+#    targetPath: '$(Build.ArtifactStagingDirectory)'
+#    artifact: '$(artifactName)'
+#    publishLocation: 'pipeline'
 
 - powershell: |
     Write-Output "$(System.AccessToken)"
