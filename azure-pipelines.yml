@@ -78,6 +78,7 @@ steps:
     Write-Output "$response.resource.data"
     $Container = $response.resource.data.TrimStart("#/")
     $downloadUrl = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)_apis/resources/Containers/$($Container)?itemPath=$($Env:ARTIFACTNAME)%2Ftwilightforest-$($env:JAVAPROPS_MINECRAFT_VERSION)-$($env:JAVAPROPS_MOD_VERSION).$($env:REVISION)-universal.jar"
+    Write-Output "$downloadUrl"
     $jobResult = (Get-Culture).TextInfo.ToTitleCase(${env:agent.jobstatus})
     $Colour = 65280
     if ($jobResult -ne "Succeeded") {
@@ -114,7 +115,8 @@ steps:
     }
     Write-Host "##vso[task.setvariable variable=DiscordMessage]$($json | ConvertTo-Json -Compress)"
 
-    $uri = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/pipelines/$($env:SYSTEM_DEFINITIONID)/runs/$($env:BUILD_BUILDID)/artifacts?artifactName=$($Env:releaseName)2&api-version=6.0-preview.1"
+    $uri = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/pipelines/$($env:SYSTEM_DEFINITIONID)/runs/$($env:BUILD_BUILDID)/artifacts?artifactName=$($Env:releaseName)&api-version=6.0-preview.1"
+    Write-Output "$uri"
     $headers = @{ Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN" }
     $response = Invoke-RestMethod -Uri $uri -Headers $headers
     $response | ConvertTo-Json -Compress
